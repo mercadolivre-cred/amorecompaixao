@@ -1689,15 +1689,7 @@ input:checked + .slider:before {
                 <div class="detalhes">
                     <div class="detalhes-view">
                         <div class="vsl-container" style="position:relative;width:100%;background:#000;border-radius:8px;overflow:hidden;">
-                            <video id="vsl-video" playsinline preload="auto" style="width:100%;display:block;border-radius:8px;">
-                                <source src="video-vsl.mp4" type="video/mp4">
-                            </video>
-                            <div id="vsl-unmute-overlay" style="display:none;position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.45);cursor:pointer;z-index:10;align-items:center;justify-content:center;">
-                                <div style="text-align:center;color:#fff;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                                    <p style="margin-top:8px;font-size:16px;font-weight:600;">Toque para ativar o som</p>
-                                </div>
-                            </div>
+                            <div style="padding:75% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/1182438656?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="VSL"></iframe></div>
                         </div>
                         <div class="sc-jXbUNg jeWFMw" style="display:none;">
                             <ul class="sc-46fe23d1-0 haSOVG"></ul>
@@ -2194,44 +2186,7 @@ input:checked + .slider:before {
     });
     </script>
 
-    <script>
-    (function() {
-      var video = document.getElementById('vsl-video');
-      var overlay = document.getElementById('vsl-unmute-overlay');
-      if (!video) return;
-
-      video.muted = false;
-      var playPromise = video.play();
-
-      if (playPromise !== undefined) {
-        playPromise.then(function() {
-          // Autoplay com som funcionou
-        }).catch(function() {
-          // Navegador bloqueou autoplay com som — tenta mutado + mostra overlay
-          video.muted = true;
-          video.play();
-          overlay.style.display = 'flex';
-
-          overlay.addEventListener('click', function() {
-            video.muted = false;
-            overlay.style.display = 'none';
-          });
-        });
-      }
-
-      // Fallback: qualquer clique/toque na página desmuta
-      function desmutar() {
-        if (video.muted) {
-          video.muted = false;
-          overlay.style.display = 'none';
-        }
-        document.removeEventListener('click', desmutar);
-        document.removeEventListener('touchstart', desmutar);
-      }
-      document.addEventListener('click', desmutar);
-      document.addEventListener('touchstart', desmutar);
-    })();
-    </script>
+    <script src="https://player.vimeo.com/api/player.js"></script>
     
     
 </body>
