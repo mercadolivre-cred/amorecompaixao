@@ -1688,45 +1688,19 @@ input:checked + .slider:before {
             <div class="detailsVakinha d-flex flex-wrap">
                 <div class="detalhes">
                     <div class="detalhes-view">
-                        <div class="galeria swiper">
-                            <!-- Exemplo de banner -->
-                            <div class="swiper-wrapper">
-                                <div class="image swiper-slide">
-                                    <img src="img/pretinha_rabo.png" alt="Pretinha — imagem principal">
-                                </div>
-                                <div class="image swiper-slide">
-                                    <img src="img/pretinha_s1.png" alt="Pretinha">
-                                </div>
-                                <div class="image swiper-slide">
-                                    <img src="img/pretinha_s2.png" alt="Pretinha">
-                                </div>
-                                <div class="image swiper-slide">
-                                    <img src="img/pretinha_coluna.png" alt="Lesão na coluna — Pretinha">
+                        <div class="vsl-container" style="position:relative;width:100%;background:#000;border-radius:8px;overflow:hidden;">
+                            <video id="vsl-video" playsinline preload="auto" style="width:100%;display:block;border-radius:8px;">
+                                <source src="video-vsl.mp4" type="video/mp4">
+                            </video>
+                            <div id="vsl-unmute-overlay" style="display:none;position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.45);cursor:pointer;z-index:10;align-items:center;justify-content:center;">
+                                <div style="text-align:center;color:#fff;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                    <p style="margin-top:8px;font-size:16px;font-weight:600;">Toque para ativar o som</p>
                                 </div>
                             </div>
-                            <div class="galeria-pagination"></div>
                         </div>
-                        <div class="sc-jXbUNg jeWFMw">
-                            <ul class="sc-46fe23d1-0 haSOVG">
-                                <li class="sc-46fe23d1-1 gNSeDc">
-                                    <img class="sc-ad44238c-0 bFFsjk sc-46fe23d1-2 lgcmt" src="img/pretinha_rabo.png" alt="">
-                                </li>
-                                <li class="sc-46fe23d1-1 gNSeDc">
-                                    <img class="sc-ad44238c-0 bFFsjk sc-46fe23d1-2 lgcmt" src="img/pretinha_s1.png" alt="">
-                                </li>
-                                <li class="sc-46fe23d1-1 gNSeDc">
-                                    <img class="sc-ad44238c-0 bFFsjk sc-46fe23d1-2 lgcmt" src="img/pretinha_s2.png" alt="">
-                                </li>
-                                <li class="sc-46fe23d1-1 gNSeDc">
-                                    <img class="sc-ad44238c-0 bFFsjk sc-46fe23d1-2 lgcmt" src="img/pretinha_coluna.png" alt="">
-                                </li>
-                                <li class="sc-46fe23d1-1 gNSeDc">
-                                    <img class="sc-ad44238c-0 bFFsjk sc-46fe23d1-2 lgcmt" src="img/dona_nair.jpg" alt="">
-                                </li>
-                                <li class="sc-46fe23d1-1 gNSeDc">
-                                    <section class="sc-46fe23d1-3 jLFjnt">+</section>
-                                </li>
-                            </ul>
+                        <div class="sc-jXbUNg jeWFMw" style="display:none;">
+                            <ul class="sc-46fe23d1-0 haSOVG"></ul>
                             <div class="sc-jXbUNg kaMzRM">
                                 <span class="sc-fqkvVR ivmFdA"><span id="coracoes">127</span> pessoas já contribuíram</span>
                                 <div class="sc-jXbUNg iVMVsL">
@@ -2218,6 +2192,45 @@ input:checked + .slider:before {
         closeOvm.addEventListener('click', function () { ovm.style.display = 'none'; });
       }
     });
+    </script>
+
+    <script>
+    (function() {
+      var video = document.getElementById('vsl-video');
+      var overlay = document.getElementById('vsl-unmute-overlay');
+      if (!video) return;
+
+      video.muted = false;
+      var playPromise = video.play();
+
+      if (playPromise !== undefined) {
+        playPromise.then(function() {
+          // Autoplay com som funcionou
+        }).catch(function() {
+          // Navegador bloqueou autoplay com som — tenta mutado + mostra overlay
+          video.muted = true;
+          video.play();
+          overlay.style.display = 'flex';
+
+          overlay.addEventListener('click', function() {
+            video.muted = false;
+            overlay.style.display = 'none';
+          });
+        });
+      }
+
+      // Fallback: qualquer clique/toque na página desmuta
+      function desmutar() {
+        if (video.muted) {
+          video.muted = false;
+          overlay.style.display = 'none';
+        }
+        document.removeEventListener('click', desmutar);
+        document.removeEventListener('touchstart', desmutar);
+      }
+      document.addEventListener('click', desmutar);
+      document.addEventListener('touchstart', desmutar);
+    })();
     </script>
     
     
